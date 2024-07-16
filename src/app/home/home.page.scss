@@ -1,0 +1,361 @@
+ion-toolbar {
+  --background: var(--ion-color-primary);
+}
+
+/* Estilos generales */
+// ion-content {
+//   --background: #34495E
+// }
+
+// ion-searchbar {
+//   --background: var(--ion-color-light);
+//   --color: var(--ion-color-dark);
+//   width: 100%;
+//   max-width: 600px;
+// }
+
+
+ion-searchbar {
+  // --background: var(--ion-color-light);
+  // --color: var(--ion-color-dark);
+
+   --background: #ffffff; /* Fondo blanco */
+  --color: #000000; /* Texto negro */
+
+  flex: 1;
+  margin: 0 10px;
+}
+
+ion-button {
+  --color: var(--ion-color-light);
+}
+
+.search-container {
+  position: relative;
+  z-index: 2000; /* Asegúrate de que el contenedor de búsqueda tenga un z-index mayor */
+}
+
+.search-results {
+  background-color: #ffffff; /* Fondo blanco */
+  color: #000000; /* Texto negro */
+  border-radius: 5px;
+  z-index: 2000;
+  max-height: 200px;
+  // overflow-y: auto;
+  // width: 100%;
+  // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+// .search-results ion-item {
+//   --background: rgb(18, 22, 24);
+// }
+
+// .search-results ion-item:hover {
+//   background-color: #1b94cc;
+// }
+
+.search-results ion-thumbnail img {
+  border-radius: 5px;
+}
+
+
+ion-button {
+  --color: var(--ion-color-light);
+}
+
+ion-segment {
+  margin: 10px 0;
+}
+
+ion-slides {
+  height: 200px;
+  margin: 20px 0;
+}
+
+ion-card img {
+  width: 100%;
+  height: auto;
+}
+
+
+
+
+
+// ion-segment{ background-color: black; }
+
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.whatsapp-float ion-icon {
+  font-size: 30px;
+  color: white;
+}
+
+
+
+.top-bar {
+  background-color: white;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 5px 0;
+}
+
+.navbar-container {
+  align-items: center;
+}
+
+.logo {
+  width: 120px;
+
+}
+
+.contact-icons ion-icon {
+  margin:  5px;
+  // width: 80p;
+
+}
+
+.contact-info {
+  margin-left: 10px;
+}
+
+.user-cart-container ion-button {
+  margin-right: 10px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.contact-icons ion-icon {
+  font-size: 24px;
+  margin: 0 5px;
+  color: #ffffff; /* Color blanco para los iconos */
+}
+
+
+// .carousel-item img {
+//   max-width: 100%;
+//   height: auto;
+//   max-height: 80vh;
+//   object-fit: contain;
+//   margin-left: 260px;
+// }
+
+
+
+
+ion-card {
+  width: 100%;
+  max-width: 180px; /* Adjust this value as needed */
+  height: 100%; /* Ajustar la altura de todas las tarjetas al 100% de la fila */
+  display: flex; /* Usar flexbox para alinear el contenido verticalmente */
+  flex-direction: column;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  ion-card img {
+  max-width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+  ion-card-content {
+    text-align: center;
+    padding: 10px;
+
+    h2 {
+      font-size: 1rem; /* Smaller font size */
+      margin: 5px 0; /* Reduce margins */
+    }
+
+    p {
+      font-size: 0.875rem; /* Smaller font size */
+      margin: 2px 0; /* Reduce margins */
+    }
+
+    ion-button {
+      font-size: 0.875rem; /* Smaller font size */
+      padding: 6px 12px; /* Reduce padding */
+    }
+  }
+
+.card-title {
+  font-size: 1rem; /* Adjust font size as needed */
+}
+
+.card-link {
+  font-size: 0.9rem; /* Adjust font size as needed */
+}
+
+.card-text {
+  font-size: 0.85rem; /* Adjust font size as needed */
+  font-weight: bold; /* Make the text bold */
+}
+
+
+
+
+.show-details {
+  display: block;
+}
+
+.product-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.overlay p {
+  margin-bottom: 0.5rem;
+}
+
+.overlay ion-button {
+  margin-top: 0.5rem;
+}
+
+.product-card:hover .overlay {
+  opacity: 1;
+}
+.image-container {
+  position: relative; /* Allows absolute positioning of the overlay */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  color: white;
+  display: flex; /* Center the text */
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth fade-in effect */
+}
+
+.overlay:hover {
+  opacity: 1; /* Visible on hover */
+}
+
+
+
+
+
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  display: flex; /* Usar Flexbox para alinear los elementos */
+  align-items: center; /* Centrar verticalmente */
+}
+
+ion-searchbar {
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-dark);
+  flex: 1; /* Ocupar el espacio disponible */
+  margin: 0 10px; /* Agregar margen a los lados */
+}
+
+ion-button {
+  --color: var(--ion-color-light);
+}
+
+.logo {
+  height: 40px; /* Ajusta la altura del logo */
+  margin-right: 10px; /* Agrega un margen a la derecha del logo */
+}
+
+.contact-icons ion-icon {
+  font-size: 24px;
+  margin: 0 5px;
+}
+
+.scrollable {
+  max-height: 200px; /* Ajusta esta altura según sea necesario */
+  overflow-y: auto;
+}
+
+
+ion-title {
+  color: white; /* Color blanco para el título */
+}
+
+ion-button {
+  --color: white; /* Color blanco para el texto del botón */
+}
+
+ion-icon {
+  color: white; /* Color blanco para los iconos */
+}
+
+
+.marcas-scroll-container {
+  overflow-x: auto; /* Habilita el desplazamiento horizontal */
+  white-space: nowrap; /* Evita que los elementos se envuelvan a la siguiente línea */
+}
+
+
+
+
+}
