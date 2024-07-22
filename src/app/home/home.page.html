@@ -1,164 +1,193 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-grid>
-      <ion-row class="navbar-container">
-        <ion-col size="2">
-          <img src="../../assets/iconoNuevo.svg" alt="Logo" class="logo">
-        </ion-col>
-        <ion-col size="5" class="search-container">
-          <ion-searchbar placeholder="Buscar productos" (ionInput)="search($event)"></ion-searchbar>
+  <div class="header-background">
+    <div class="content-wrapper">
+      <ion-toolbar class="primary-toolbar">
+        <ion-grid>
+          <ion-row class="navbar-container">
+            <!-- Logo -->
+            <ion-col size="2" class="logo-container">
+              <img src="../../assets/iconoNuevo.svg" alt="Logo" class="logo">
+            </ion-col>
 
-        </ion-col>
-        <ion-col size="3">
-          <ng-container *ngIf="user$ | async as user; else loginButton">
-            <p style="color: white;">Bienvenido {{ user.nombre }} </p>
-            <ion-button (click)="logout()">Cerrar sesión</ion-button>
-          </ng-container>
-          <ng-template #loginButton>
-            <ion-button fill="outline" color="light" (click)="navigateTologin()">
-              <ion-icon slot="start" name="log-in-outline"></ion-icon>
-              Iniciar Sesión
+            <!-- Search bar -->
+            <ion-col size="7" class="search-container">
+              <ion-searchbar placeholder="Buscar productos" (ionInput)="search($event)"></ion-searchbar>
+            </ion-col>
+
+            <!-- User actions -->
+            <ion-col size="3" class="user-actions">
+              <ng-container *ngIf="user$ | async as user; else loginButton">
+                <p class="welcome-message">Bienvenido {{ user.nombre }}</p>
+                <ion-button (click)="logout()">Cerrar sesión</ion-button>
+              </ng-container>
+              <ng-template #loginButton>
+                <ion-button fill="outline" color="light" (click)="navigateTologin()">
+                  <ion-icon slot="start" name="log-in-outline"></ion-icon>
+                  Iniciar Sesión
+                </ion-button>
+              </ng-template>
+              <ion-icon name="cart-outline" class="cart-icon" (click)="goToCart()"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+
+      <ion-toolbar class="secondary-toolbar">
+        <div style="width: 100%; display: flex; justify-content: center;">
+          <ion-buttons>
+            <ion-button (click)="toggleDropdown('categoria')">
+              <strong>Categoria</strong>
+              <ion-icon slot="end" [name]="isDropdownOpen['categoria'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
             </ion-button>
-          </ng-template>
-        </ion-col>
-        <ion-col size="2" class="contact-icons">
-          <ion-icon name="mail-outline"></ion-icon>
-          <ion-icon name="logo-facebook"></ion-icon>
-          <ion-icon name="logo-instagram" (click)="openInstgram()"></ion-icon>
-          <ion-icon name="logo-whatsapp" ></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
+            <div *ngIf="isDropdownOpen['categoria']" class="dropdown-content">
+              <!-- Contenido de Categoría -->
+            </div>
+
+            <ion-button (click)="toggleDropdown('marcas')">
+              <strong>Marcas</strong>
+              <ion-icon slot="end" [name]="isDropdownOpen['marcas'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+            </ion-button>
+            <div *ngIf="isDropdownOpen['marcas']" class="dropdown-content">
+              <!-- Contenido de Marcas -->
+            </div>
+
+            <ion-button (click)="toggleDropdown('productos')">
+              <strong>Productos</strong>
+              <ion-icon slot="end" [name]="isDropdownOpen['productos'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+            </ion-button>
+            <div *ngIf="isDropdownOpen['productos']" class="dropdown-content">
+              <!-- Contenido de Productos -->
+            </div>
+
+            <ion-button (click)="toggleDropdown('perfil')">
+              <strong>Perfil</strong>
+              <ion-icon slot="end" [name]="isDropdownOpen['perfil'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+            </ion-button>
+            <div *ngIf="isDropdownOpen['perfil']" class="dropdown-content">
+              <!-- Contenido de Perfil -->
+            </div>
+          </ion-buttons>
+        </div>
+      </ion-toolbar>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content>
-  <div *ngIf="!isSearching">
-    <!-- Main Navigation -->
-    <ion-segment>
-      <ion-segment-button value="marcas" (click)="navigateToAfip()">
-        <strong>Marcas</strong>
-      </ion-segment-button>
-      <ion-segment-button value="productos" (click)="navigateToF931()">
-        <strong>Productos</strong>
-      </ion-segment-button>
-      <ion-segment-button value="categoria" (click)="navigateToCertificacion()">
-        <strong>Categoria</strong>
-      </ion-segment-button>
-      <ion-segment-button value="Login" (click)="navigateTologin()">
-        <ng-container>
-          <strong>Perfil</strong>
-        </ng-container>
-        <ng-template #loginRegister>
-          Iniciar Sesión / Registrarse
-        </ng-template>
-      </ion-segment-button>
-    </ion-segment>
-
-    <div class="container d-flex justify-content-center">
-      <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active d-flex justify-content-center">
-            <img class="d-block w-100" src="../../assets/iconoAtenea.webp" alt="First slide">
+  <div class="content-wrapper">
+    <div *ngIf="!isSearching">
+      <!-- Carousel -->
+      <div class="container d-flex justify-content-center">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active d-flex justify-content-center">
+              <img class="d-block w-100" src="../../assets/iconoAtenea.webp" alt="First slide">
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <ion-grid class="marcas-scroll-container">
-      <ion-row>
-        <ion-col size="6" size-md="3" *ngFor="let marca of marcas">
-          <div class="marca-container" (click)="onMarcaClick(marca.id)">
-            <img [src]="marca.imagen" alt="{{ marca.nombre }}" style="width: 100px; height: 100px;" />
+      <!-- Marcas -->
+      <div class="marcas-section">
+        <h2 class="text-center">NUESTRAS MARCAS</h2>
+        <div class="marcas-scroll-container">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6" size-md="3" *ngFor="let marca of marcas">
+                <ion-card class="marca-card" (click)="onMarcaClick(marca.id)">
+                  <img [src]="marca.imagen" alt="{{ marca.nombre }}" />
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div class="text-center mt-3">
+          <ion-button color="primary">Ver todas las Marcas</ion-button>
+        </div>
+      </div>
+
+      <!-- Productos en Oferta -->
+      <div class="container mt-4" *ngIf="productOferta && productOferta.length > 0">
+        <div class="row align-items-center mb-3">
+          <div class="col">
+            <h4 class="text-center mb-3">¡¡Productos en Oferta!!</h4>
           </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-
-    <!-- Productos en Oferta -->
-    <div class="container mt-4" *ngIf="productOferta && productOferta.length > 0">
-      <div class="row align-items-center mb-3">
-        <div class="col">
-          <h4 class="text-center mb-3">¡¡Productos en Oferta!!</h4>
         </div>
       </div>
-    </div>
 
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12" size-md="6" size-lg="3" *ngFor="let oferta of productOferta | slice:0:8">
-          <ion-card>
-            <div class="image-container" (click)="navigateToDetailOferta(oferta)">
-              <img [src]="oferta.imagen" [alt]="oferta.nombre" />
-              <div class="overlay" (click)="navigateToDetailOferta(oferta)">
-                <p>Más Info</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6" size-lg="3" *ngFor="let oferta of productOferta | slice:0:8">
+            <ion-card>
+              <div class="image-container" (click)="navigateToDetailOferta(oferta)">
+                <img [src]="oferta.imagen" [alt]="oferta.nombre" />
+                <div class="overlay" (click)="navigateToDetailOferta(oferta)">
+                  <p>Más Info</p>
+                </div>
               </div>
-            </div>
-            <ion-card-content>
-              <h2><strong>{{ oferta.nombre }}</strong></h2>
-              <p><strong>Precio Final: ${{ oferta.precioFinal }}</strong></p>
-              <ion-button expand="full" color="primary" (click)="navigateToDetailOferta(oferta)">Ver más</ion-button>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+              <ion-card-content>
+                <h2><strong>{{ oferta.nombre }}</strong></h2>
+                <p><strong>Precio Final: ${{ oferta.precioFinal }}</strong></p>
+                <ion-button expand="full" color="primary" (click)="navigateToDetailOferta(oferta)">Ver más</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-
-
-
-
-
-
-
-
-
-    <div class="container mt-4">
-      <div class="row align-items-center mb-3">
-        <div class="col">
-          <h4 class="text-center mb-3">Productos Recomendados</h4>
+      <!-- Productos Recomendados -->
+      <div class="container mt-4">
+        <div class="row align-items-center mb-3">
+          <div class="col">
+            <h4 class="text-center mb-3">Productos Recomendados</h4>
+          </div>
         </div>
       </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="6" size-lg="3" *ngFor="let product of productos | slice:0:8">
+            <ion-card>
+              <div class="image-container" (click)="navigateToDetail(product)">
+                <img [src]="product.imagen" [alt]="product.nombre" />
+                <div class="overlay" (click)="navigateToDetail(product)">
+                  <p>Más Info</p>
+                </div>
+              </div>
+              <ion-card-content>
+                <h2><strong>{{ product.nombre }}</strong></h2>
+                <p><strong>Precio Final: ${{ product.precioFinal | number:'1.0-2' }}</strong></p>
+
+                <ion-button expand="full" color="primary" (click)="navigateToDetail(product)">Ver más</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
 
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12" size-md="6" size-lg="3" *ngFor="let product of productos | slice:0:8">
-          <ion-card>
-            <div class="image-container" (click)="navigateToDetail(product)">
-              <img [src]="product.imagen" [alt]="product.nombre" />
-              <div class="overlay" (click)="navigateToDetail(product)">
-                <p>Más Info</p>
-              </div>
-            </div>
-            <ion-card-content>
-              <h2><strong>{{ product.nombre }}</strong></h2>
-              <p><strong>Precio Final: ${{ product.precioFinal | number:'1.0-2' }}</strong></p>
-
-              <ion-button expand="full" color="primary" (click)="navigateToDetail(product)">Ver más</ion-button>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <div *ngIf="isSearching">
+      <ion-list>
+        <ion-item *ngFor="let product of productosFiltrados">
+          <ion-thumbnail slot="start">
+            <img [src]="product.imagen" />
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ product.nombre }}</h2>
+            <p>Codigo: {{ product.codigo }}</p>
+            <p>Precio Final: ${{ product.precioFinal }}</p>
+          </ion-label>
+          <ion-button fill="clear" color="primary" (click)="navigateToDetail(product)">Ver</ion-button>
+        </ion-item>
+      </ion-list>
+    </div>
   </div>
-
-  <div *ngIf="isSearching">
-    <ion-list>
-      <ion-item *ngFor="let product of productosFiltrados">
-        <ion-thumbnail slot="start">
-          <img [src]="product.imagen" />
-        </ion-thumbnail>
-        <ion-label>
-          <h2>{{ product.nombre }}</h2>
-          <p>Codigo: {{ product.codigo }}</p>
-          <p>Precio Final: ${{ product.precioFinal }}</p>
-        </ion-label>
-        <ion-button fill="clear" color="primary" (click)="navigateToDetail(product)">Ver</ion-button>
-      </ion-item>
-    </ion-list>
-  </div>
+  <ion-footer>
+    <div class="footer-content text-center">
+      <p>&copy; 2024 Derechos Reservados | Desarrollado por <a href="https://www.ateneasoftware.net" target="_blank">Ateneasoftware.net</a></p>
+      <img src="./assets/iconoAtenea.webp" alt="Icono de la empresa" style="width: 150px;">
+    </div>
+  </ion-footer>
 </ion-content>
 
 <!-- Botón flotante de WhatsApp -->
@@ -174,8 +203,3 @@
     <ion-icon name="cart"></ion-icon>
   </ion-fab-button>
 </ion-fab>
-
-<ion-footer class="text-center">
-  <p>&copy; 2024 Derechos Reservados | Desarrollado por <a href="https://www.ateneasoftware.net" target="_blank">Ateneasoftware.net</a></p>
-  <img src="./assets/iconoAtenea.webp" alt="Icono de la empresa" style="width: 150px;">
-</ion-footer>

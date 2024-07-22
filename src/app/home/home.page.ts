@@ -1,72 +1,67 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonFab,IonFabList,  IonFabButton, IonFooter,IonSegment,IonCardHeader, IonThumbnail, IonCardTitle, IonCardContent, IonCardSubtitle, IonSegmentButton, IonChip,IonAvatar, IonSearchbar,IonApp, IonTitle, IonContent, IonLabel, IonList, IonItem, IonCard, IonInput, IonSpinner, IonButtons, IonButton, IonIcon, IonImg, IonCol, IonRow, IonBackButton, IonGrid } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonFab, IonFabList, IonFabButton, IonFooter, IonSegment, IonCardHeader, IonThumbnail, IonCardTitle, IonCardContent, IonCardSubtitle, IonSegmentButton, IonChip, IonAvatar, IonSearchbar, IonApp, IonTitle, IonContent, IonLabel, IonList, IonItem, IonCard, IonInput, IonSpinner, IonButtons, IonButton, IonIcon, IonImg, IonCol, IonRow, IonBackButton, IonGrid, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
-
 import { IoniconsModule } from '../common/modules/ionicons.module';
 import { Router } from '@angular/router';
-import { AlertController,  IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { FirestoreService } from 'src/app/common/services/firestore.service';
 import { UserI } from '../common/models/users.models';
 import { CommonModule } from '@angular/common';
 import { Producto } from '../common/models/producto.model';
 import { Observable } from 'rxjs';
 import { AuthService } from '../common/services/auth.service';
-
-
-
 import { Marca } from '../common/models/marca.model';
 import { Productoferta } from '../common/models/productofree.model';
 
-
-
-
+type DropdownSegment = 'categoria' | 'marcas' | 'productos' | 'perfil';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonGrid, IonBackButton, IonRow, IonCol, IonFabButton, IonImg, IonList, IonLabel, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonInput,
-    IonIcon, IonButton, IonButtons,IonFab, IonSpinner, IonInput, IonCard,
+  imports: [
+    IonGrid, IonBackButton, IonRow, IonCol, IonFabButton, IonImg, IonList, IonLabel, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonInput,
+    IonIcon, IonButton, IonButtons, IonFab, IonSpinner, IonInput, IonCard,
     FormsModule,
     IoniconsModule,
     CommonModule,
     IonChip,
     IonAvatar,
-IonFabList,
+    IonFabList,
     IonThumbnail,
-IonFooter,
-IonCardHeader,
+    IonFooter,
+    IonCardHeader,
     IonApp,
-IonCardSubtitle,
+    IonCardSubtitle,
     IonSearchbar,
     IonSegment, IonSegmentButton,
     IonCardTitle,
     IonCardContent,
-
-
+    IonSelect, IonSelectOption
   ],
 })
 export class HomePage implements OnInit {
 
-productos: Producto[] = [];
-productosFiltrados: Producto[] = [];
-producto: Producto | undefined;
- productOferta: Productoferta[] = [];
+  productos: Producto[] = [];
+  productosFiltrados: Producto[] = [];
+  producto: Producto | undefined;
+  productOferta: Productoferta[] = [];
 
- showMasInfo = false;
+  showMasInfo = false;
   user$: Observable<any | null> = this.authService.user$;
-selectedProduct: any;
+  selectedProduct: any;
+  marcas: Marca[] = [];
+  isSearching: boolean = false; // Nueva variable de estado
+  selectedSegment: string;
+  isDropdownOpen: Record<DropdownSegment, boolean> = {
+    categoria: false,
+    marcas: false,
+    productos: false,
+    perfil: false
+  };
 
-marcas: Marca[] = [];
-
-
-  isSearching: boolean = false;  // Nueva variable de estado
-
-
-
-
-// Método para mostrar los detalles del producto al pasar el mouse
+  // Método para mostrar los detalles del producto al pasar el mouse
   showDetails(product: any) {
     this.selectedProduct = product;
   }
@@ -77,46 +72,32 @@ marcas: Marca[] = [];
   }
 
   openWhatsApp() {
-  const whatsappNumber = '5493417532800';
-  const whatsappUrl = `https://wa.me/${whatsappNumber}`;
-  window.open(whatsappUrl, '_blank');
-}
-
-openInstgram(){
-const instagramUrl= "https://www.instagram.com/ateneasoft1/";
-window.open(instagramUrl, '_blank')
-}
-
-comprar() {
-    const message = `Hola, estoy interesado en el producto ${this.producto.nombre}`;
-    const whatsappUrl = `https://wa.me/5491167554362?text=${encodeURIComponent(message)}`;
-
+    const whatsappNumber = '5493417532800';
+    const whatsappUrl = `https://wa.me/${whatsappNumber}`;
     window.open(whatsappUrl, '_blank');
   }
 
-
-
-  constructor( private router: Router,private firestoreService: FirestoreService,
-    private alertController: AlertController,private authService: AuthService) {
-
-
+  openInstgram() {
+    const instagramUrl = "https://www.instagram.com/ateneasoft1/";
+    window.open(instagramUrl, '_blank')
   }
 
+  comprar() {
+    const message = `Hola, estoy interesado en el producto ${this.producto?.nombre}`;
+    const whatsappUrl = `https://wa.me/5491167554362?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  }
 
+  constructor(private router: Router, private firestoreService: FirestoreService,
+    private alertController: AlertController, private authService: AuthService) { }
 
-
-
-logout() {
+  logout() {
     this.authService.logout();
   }
 
-
-
-
-
   async mostrarAlerta(mensaje: string) {
     const alert = await this.alertController.create({
-      header: 'se ha cerrado la sesión',
+      header: 'Se ha cerrado la sesión',
       message: mensaje,
       buttons: ['OK']
     });
@@ -139,11 +120,11 @@ logout() {
     this.router.navigate(['/recibosueldo']);
   }
 
- navigateToPerfil() {
+  navigateToPerfil() {
     this.router.navigate(['/perfil']);
   }
 
-navigateToAfip() {
+  navigateToAfip() {
     this.router.navigate(['/afip']);
   }
 
@@ -151,106 +132,107 @@ navigateToAfip() {
     this.router.navigate(['/F931']);
   }
 
-   navigateToDeclaracion() {
+  navigateToDeclaracion() {
     this.router.navigate(['/declaracion']);
   }
 
-navigateToDetail(product:Producto){
-  this.router.navigate(['/product', product.id]);
-}
-
-navigateToDetailOferta(productOfer:Productoferta){
-  this.router.navigate(['/productOferta', productOfer.id]);
-}
-
-
-
- async ngOnInit() {
-
-
-
-await this.cargarProductos();
-  this.marcas = await this.firestoreService.getMarcas();
-this.cargarProductosOferta()
-
-this.clearSearch();
-
+  navigateToDetail(product: Producto) {
+    this.router.navigate(['/product', product.id]);
   }
 
-   onMarcaClick(marcaId: string) {
+  navigateToDetailOferta(productOfer: Productoferta) {
+    this.router.navigate(['/productOferta', productOfer.id]);
+  }
+
+  async ngOnInit() {
+    await this.cargarProductos();
+    this.marcas = await this.firestoreService.getMarcas();
+    this.cargarProductosOferta();
+    this.clearSearch();
+  }
+
+  onMarcaClick(marcaId: string) {
     this.router.navigate(['/productos-marca', marcaId]);
   }
 
-   closeSearchResults() {
+  closeSearchResults() {
     this.productosFiltrados = [];
   }
 
-
- async cargarProductos() {
+  async cargarProductos() {
     this.productos = await this.firestoreService.getProductos();
-    // this.productosFiltrados = this.productos;
-      this.productosFiltrados = [];
+    this.productosFiltrados = [];
   }
 
-
-//oferta
   async cargarProductosOferta() {
     this.productOferta = await this.firestoreService.getProductofertas();
     console.log('Productos obtenidos de oferta:', this.productOferta);
   }
 
-
-
   search(event: any) {
     const query = event.target.value.toLowerCase();
     if (query.trim() === '') {
       this.productosFiltrados = [];
-      this.isSearching = false;  // Cambia el estado de búsqueda
+      this.isSearching = false;
     } else {
       this.productosFiltrados = this.productos.filter(producto =>
         producto.nombre.toLowerCase().includes(query)
       );
-      this.isSearching = true;  // Cambia el estado de búsqueda
+      this.isSearching = true;
     }
   }
 
   clearSearch() {
     const searchbar = document.querySelector('ion-searchbar');
     if (searchbar) {
-      searchbar.value = ''; // Reinicia el valor del ion-searchbar a una cadena vacía
+      searchbar.value = '';
     }
   }
 
   navigateToProduct(product: Producto) {
-    // Implementa la navegación al detalle del producto si es necesario
     console.log('Navegar a producto:', product);
   }
 
-   navigateTologin() {
+  navigateTologin() {
     this.router.navigate(['/login']);
   }
 
-
-async mostrarAlertaBienvenida(nombre: string) {
+  async mostrarAlertaBienvenida(nombre: string) {
     const alert = await this.alertController.create({
       header: '¡Bienvenidx!',
       message: `Hola, ${nombre}!`,
       buttons: ['OK']
     });
-
     await alert.present();
   }
-
 
   openLink(url: string) {
     window.open(url, '_blank');
   }
 
-goToCart() {
+  goToCart() {
     this.router.navigate(['/carrito']);
   }
 
+  toggleDropdown(segment: DropdownSegment) {
+    this.isDropdownOpen[segment] = !this.isDropdownOpen[segment];
+  }
+
+  onDropdownChange(event: any) {
+    this.selectedSegment = event.detail.value;
+    switch (this.selectedSegment) {
+      case 'categoria':
+        // Lógica específica para mostrar contenido de categoría
+        break;
+      case 'marcas':
+        // Lógica específica para mostrar contenido de marcas
+        break;
+      case 'productos':
+        // Lógica específica para mostrar contenido de productos
+        break;
+      case 'perfil':
+        this.navigateTologin();
+        break;
+    }
+  }
 }
-
-
-
