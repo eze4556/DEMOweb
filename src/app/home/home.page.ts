@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../common/services/auth.service';
 import { Marca } from '../common/models/marca.model';
 import { Productoferta } from '../common/models/productofree.model';
+import { Categoria } from 'src/app/common/models/categoria.model';
 
 type DropdownSegment = 'categoria' | 'marcas' | 'productos' | 'perfil';
 
@@ -47,6 +48,8 @@ export class HomePage implements OnInit {
   productosFiltrados: Producto[] = [];
   producto: Producto | undefined;
   productOferta: Productoferta[] = [];
+  categorias: Categoria[] = []; // Agregada para manejar las categorías
+  selectedCategoriaId: string | undefined;
 
   showMasInfo = false;
   user$: Observable<any | null> = this.authService.user$;
@@ -54,12 +57,53 @@ export class HomePage implements OnInit {
   marcas: Marca[] = [];
   isSearching: boolean = false; // Nueva variable de estado
   selectedSegment: string;
-  isDropdownOpen: Record<DropdownSegment, boolean> = {
+  isDropdownOpen: Record<string, boolean> = {
     categoria: false,
     marcas: false,
     productos: false,
     perfil: false
   };
+
+  constructor(private router: Router, private firestoreService: FirestoreService,
+    private alertController: AlertController, private authService: AuthService) { }
+
+  async ngOnInit() {
+    await this.cargarProductos();
+    this.marcas = await this.firestoreService.getMarcas();
+    this.cargarProductosOferta();
+    this.clearSearch();
+    await this.loadCategories(); // Cargar categorías
+  }
+
+  async loadCategories() {
+    try {
+      this.categorias = await this.firestoreService.getCategorias();
+      console.log('Categorías:', this.categorias);
+    } catch (error) {
+      console.error('Error al obtener categorías:', error);
+    }
+  }
+
+  onCategoriaClick(categoriaId: string) {
+    this.router.navigate(['/certificacion', { categoriaId: categoriaId }]);
+  }
+
+  toggleDropdown(menu: string) {
+    this.isDropdownOpen[menu] = !this.isDropdownOpen[menu];
+    if (this.isDropdownOpen[menu]) {
+      // Cerrar otros dropdowns si uno está abierto
+      for (let key in this.isDropdownOpen) {
+        if (key !== menu) {
+          this.isDropdownOpen[key] = false;
+        }
+      }
+    }
+  }
+
+
+  navigateToCategoria(categoriaId: string) {
+    this.router.navigate(['/productos-categoria', categoriaId]);
+  }
 
   // Método para mostrar los detalles del producto al pasar el mouse
   showDetails(product: any) {
@@ -87,9 +131,6 @@ export class HomePage implements OnInit {
     const whatsappUrl = `https://wa.me/5491167554362?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   }
-
-  constructor(private router: Router, private firestoreService: FirestoreService,
-    private alertController: AlertController, private authService: AuthService) { }
 
   logout() {
     this.authService.logout();
@@ -142,13 +183,6 @@ export class HomePage implements OnInit {
 
   navigateToDetailOferta(productOfer: Productoferta) {
     this.router.navigate(['/productOferta', productOfer.id]);
-  }
-
-  async ngOnInit() {
-    await this.cargarProductos();
-    this.marcas = await this.firestoreService.getMarcas();
-    this.cargarProductosOferta();
-    this.clearSearch();
   }
 
   onMarcaClick(marcaId: string) {
@@ -212,27 +246,5 @@ export class HomePage implements OnInit {
 
   goToCart() {
     this.router.navigate(['/carrito']);
-  }
-
-  toggleDropdown(segment: DropdownSegment) {
-    this.isDropdownOpen[segment] = !this.isDropdownOpen[segment];
-  }
-
-  onDropdownChange(event: any) {
-    this.selectedSegment = event.detail.value;
-    switch (this.selectedSegment) {
-      case 'categoria':
-        // Lógica específica para mostrar contenido de categoría
-        break;
-      case 'marcas':
-        // Lógica específica para mostrar contenido de marcas
-        break;
-      case 'productos':
-        // Lógica específica para mostrar contenido de productos
-        break;
-      case 'perfil':
-        this.navigateTologin();
-        break;
-    }
   }
 }

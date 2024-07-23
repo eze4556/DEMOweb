@@ -8,12 +8,6 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let categoria of categorias" (click)="onCategoriaClick(categoria.id)">
-      {{ categoria.nombre }}
-    </ion-item>
-  </ion-list>
-
   <!-- Sección de Productos de la Categoría Seleccionada -->
   <ion-grid *ngIf="selectedCategoria && productos.length > 0">
     <ion-row *ngIf="productos.length > 0">

@@ -1,5 +1,7 @@
 .header-background {
   background-color: #FFCF00;
+  z-index: 1000; /* Asegura que el header esté por encima del contenido */
+  position: relative;
 }
 
 .content-wrapper {
@@ -17,7 +19,10 @@
   --background: #FFCF00;
   padding: 0;
   display: flex;
-  justify-content: center; /* Centra los botones en la secondary toolbar */
+  justify-content: center;
+  overflow: visible; /* Asegura que el contenido se desborde correctamente */
+  position: relative;
+  z-index: 10; /* Asegura que está encima del contenido */
 }
 
 .logo-container {
@@ -27,19 +32,19 @@
 }
 
 .logo {
-  height: 50px;
+  height: 3.125rem; /* 50px */
 }
 
 .search-container {
   display: flex;
   align-items: center;
-  justify-content: center; /* Centra la barra de búsqueda */
-  padding-left: 100px;
+  justify-content: center;
+  padding-left: 6.25rem; /* 100px */
 }
 
 .search-bar {
   width: 100%;
-  max-width: 900px; /* Incrementa el ancho máximo de la barra de búsqueda */
+  max-width: 75rem; /* 900px */
 }
 
 .user-actions {
@@ -49,65 +54,82 @@
 }
 
 .welcome-message {
-  margin: 0 10px 0 0;
+  margin: 0 0.625rem 0 0; /* 0 10px 0 0 */
   color: #fff;
 }
 
 .cart-icon {
-  font-size: 24px;
+  font-size: 1.5rem; /* 24px */
   cursor: pointer;
-  margin-left: 15px;
+  margin-left: 0.9375rem; /* 15px */
 }
 
 ion-toolbar.secondary-toolbar ion-buttons ion-button {
-  color: #000; /* Cambia el color del texto a negro */
-}
-
-.dropdown-content {
-  position: absolute;
-  background-color: white;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.dropdown-content ion-item {
-  padding: 10px;
-  cursor: pointer;
+  color: #000;
 }
 
 .marcas-section {
   background-color: #f8f9fa;
-  padding: 20px 0;
+  padding: 1.25rem 0; /* 20px 0 */
 }
 
 .marcas-scroll-container {
   display: flex;
   overflow-x: auto;
-  padding: 10px 0;
+  padding: 0.625rem 0; /* 10px 0 */
 }
 
 .marca-card {
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 120px; /* Ancho fijo para todas las tarjetas */
-  height: 120px; /* Alto fijo para todas las tarjetas */
+  border-radius: 0.5rem; /* 8px */
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
+  width: 7.5rem; /* 120px */
+  height: 7.5rem; /* 120px */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px;
+  margin: 0.3125rem; /* 5px */
 }
 
 .marca-card img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* Asegura que la imagen se adapte dentro de la tarjeta */
+  object-fit: contain;
 }
 
 .footer-content {
   background-color: #FFCF00;
-  padding: 20px 0;
+  padding: 1.25rem 0; /* 20px 0 */
+}
+
+.dropdown-container {
+  position: absolute;
+  top: 8.125rem; /* 130px */
+  left: 32%; /* Ajusta según sea necesario para alinear con el botón */
+  z-index: 1000; /* Asegura que está sobre otros elementos */
+  display: none;
+  background: white;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15); /* 0 2px 8px */
+  width: 12.5rem; /* 200px */
+}
+
+.dropdown-container.open {
+  display: block;
+}
+
+.dropdown-arrow {
+  position: absolute;
+  top: -0.625rem; /* -10px */
+  left: 60%; /* Centrar horizontalmente */
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 0.625rem solid transparent; /* 10px */
+  border-right: 0.625rem solid transparent; /* 10px */
+  border-bottom: 0.625rem solid white; /* 10px */
+}
+
+ion-content {
+  position: relative;
+  z-index: 1; /* Debe estar debajo del dropdown */
 }

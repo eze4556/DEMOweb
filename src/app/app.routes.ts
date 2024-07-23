@@ -18,6 +18,10 @@ export const routes: Routes = [
     path: 'certificacion',
     loadComponent: () => import('./views/cert-ingresos/cert-ingresos.component').then((m) => m.CertIngresosComponent),
   },
+  {
+    path: 'certificacion/:categoriaId',
+    loadComponent: () => import('./views/cert-ingresos/cert-ingresos.component').then((m) => m.CertIngresosComponent),
+  },
     {
     path: 'perfil',
     loadComponent: () => import('../app/views/perfil/perfil.component').then((m) => m.PerfilComponent),

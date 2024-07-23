@@ -1,12 +1,11 @@
 import { IonItem, IonButton, IonLabel, IonInput, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonList, IonCardContent, IonHeader, IonButtons, IonTitle, IonBackButton, IonToolbar, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../../common/services/firestore.service';
-import { Observable } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Categoria } from 'src/app/common/models/categoria.model';
 import { Producto } from 'src/app/common/models/producto.model';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cert-ingresos',
@@ -16,15 +15,21 @@ import { Router } from '@angular/router';
   imports: [IonToolbar, IonBackButton, IonTitle, IonButtons, IonButton, IonHeader, IonItem, IonInput, IonLabel, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonList, IonCardContent, IonSelect, IonSelectOption, CommonModule, FormsModule],
 })
 export class CertIngresosComponent implements OnInit {
-
- categorias: Categoria[] = [];
+  categorias: Categoria[] = [];
   productos: Producto[] = [];
   selectedCategoria: Categoria | undefined;
 
-  constructor(private firestoreService: FirestoreService,private router: Router,) {}
+  constructor(private firestoreService: FirestoreService, private route: ActivatedRoute, private router: Router) {}
 
   async ngOnInit() {
     this.loadCategories();
+
+    this.route.paramMap.subscribe(params => {
+      const categoriaId = params.get('categoriaId');
+      if (categoriaId) {
+        this.loadProductosByCategoria(categoriaId);
+      }
+    });
   }
 
   async loadCategories() {
@@ -45,12 +50,7 @@ export class CertIngresosComponent implements OnInit {
     }
   }
 
-  onCategoriaClick(categoriaId: string) {
-    this.loadProductosByCategoria(categoriaId);
+  navigateToDetail(product: Producto) {
+    this.router.navigate(['/product', product.id]);
   }
-
-  navigateToDetail(product:Producto){
-  this.router.navigate(['/product', product.id]);
-}
-
 }

@@ -33,45 +33,41 @@
       </ion-toolbar>
 
       <ion-toolbar class="secondary-toolbar">
-        <div style="width: 100%; display: flex; justify-content: center;">
+        <div style="width: 100%; display: flex; justify-content: center; position: relative;">
           <ion-buttons>
-            <ion-button (click)="toggleDropdown('categoria')">
+            <ion-button id="categoria-button" (click)="toggleDropdown('categoria')">
               <strong>Categoria</strong>
               <ion-icon slot="end" [name]="isDropdownOpen['categoria'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
             </ion-button>
-            <div *ngIf="isDropdownOpen['categoria']" class="dropdown-content">
-              <!-- Contenido de Categoría -->
-            </div>
-
             <ion-button (click)="toggleDropdown('marcas')">
               <strong>Marcas</strong>
               <ion-icon slot="end" [name]="isDropdownOpen['marcas'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
             </ion-button>
-            <div *ngIf="isDropdownOpen['marcas']" class="dropdown-content">
-              <!-- Contenido de Marcas -->
-            </div>
-
             <ion-button (click)="toggleDropdown('productos')">
               <strong>Productos</strong>
               <ion-icon slot="end" [name]="isDropdownOpen['productos'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
             </ion-button>
-            <div *ngIf="isDropdownOpen['productos']" class="dropdown-content">
-              <!-- Contenido de Productos -->
-            </div>
-
             <ion-button (click)="toggleDropdown('perfil')">
               <strong>Perfil</strong>
               <ion-icon slot="end" [name]="isDropdownOpen['perfil'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
             </ion-button>
-            <div *ngIf="isDropdownOpen['perfil']" class="dropdown-content">
-              <!-- Contenido de Perfil -->
-            </div>
           </ion-buttons>
         </div>
       </ion-toolbar>
     </div>
   </div>
 </ion-header>
+
+<!-- Dropdown fuera del ion-header -->
+<div class="dropdown-container" [ngClass]="{ 'open': isDropdownOpen['categoria'] }">
+  <div class="dropdown-arrow"></div>
+  <ion-list>
+    <ion-item *ngFor="let categoria of categorias" (click)="onCategoriaClick(categoria.id)">
+      {{ categoria.nombre }}
+    </ion-item>
+  </ion-list>
+</div>
+
 
 <ion-content>
   <div class="content-wrapper">
