@@ -127,6 +127,7 @@ async getCategoriaById(id: string): Promise<Categoria | undefined> {
         categoria: data['categoria'],
         marca: data['marca'],
         imagen: data['imagen'] || null,
+        envio:data['envio']
       } as Producto;
     });
   }
@@ -415,6 +416,7 @@ async getProductosOfertaByMarca(marcaId: string): Promise<Productoferta[]> {
       categoria: data['categoria'],
       marca: data['marca'],
       imagen: data['imagen'] || null,
+      envio:data['envio']
     } as Productoferta;
   });
 }

@@ -1,3 +1,5 @@
+
+
 <ion-header>
   <div class="header-background">
     <div class="content-wrapper">
@@ -58,6 +60,8 @@
   </div>
 </ion-header>
 
+
+
 <!-- Dropdown fuera del ion-header -->
 <div class="dropdown-container" [ngClass]="{ 'open': isDropdownOpen['categoria'] }">
   <div class="dropdown-arrow"></div>
@@ -70,6 +74,9 @@
 
 
 <ion-content>
+
+<br>
+
   <div class="content-wrapper">
     <div *ngIf="!isSearching">
       <!-- Carousel -->
@@ -77,89 +84,113 @@
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active d-flex justify-content-center">
-              <img class="d-block w-100" src="../../assets/iconoAtenea.webp" alt="First slide">
+              <img class="d-block w-100" src="../../assets/D_NQ_652380-MLA77603857572_072024-OO.webp" alt="First slide">
             </div>
           </div>
         </div>
       </div>
 
+
+
       <!-- Marcas -->
       <div class="marcas-section">
-        <h2 class="text-center">NUESTRAS MARCAS</h2>
-        <div class="marcas-scroll-container">
-          <ion-grid>
-            <ion-row>
-              <ion-col size="6" size-md="3" *ngFor="let marca of marcas">
-                <ion-card class="marca-card" (click)="onMarcaClick(marca.id)">
-                  <img [src]="marca.imagen" alt="{{ marca.nombre }}" />
-                </ion-card>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-        <div class="text-center mt-3">
-          <ion-button color="primary">Ver todas las Marcas</ion-button>
-        </div>
-      </div>
-
-      <!-- Productos en Oferta -->
-      <div class="container mt-4" *ngIf="productOferta && productOferta.length > 0">
-        <div class="row align-items-center mb-3">
-          <div class="col">
-            <h4 class="text-center mb-3">¡¡Productos en Oferta!!</h4>
-          </div>
-        </div>
-      </div>
-
+  <!-- <h2 class="text-center">NUESTRAS MARCAS</h2> -->
+  <div class="marcas-scroll-container">
+    <div class="marcas-wrapper">
       <ion-grid>
         <ion-row>
-          <ion-col size="12" size-md="6" size-lg="3" *ngFor="let oferta of productOferta | slice:0:8">
-            <ion-card>
-              <div class="image-container" (click)="navigateToDetailOferta(oferta)">
-                <img [src]="oferta.imagen" [alt]="oferta.nombre" />
-                <div class="overlay" (click)="navigateToDetailOferta(oferta)">
-                  <p>Más Info</p>
-                </div>
-              </div>
-              <ion-card-content>
-                <h2><strong>{{ oferta.nombre }}</strong></h2>
-                <p><strong>Precio Final: ${{ oferta.precioFinal }}</strong></p>
-                <ion-button expand="full" color="primary" (click)="navigateToDetailOferta(oferta)">Ver más</ion-button>
-              </ion-card-content>
-            </ion-card>
+          <ion-col size="12" class="marcas-carousel">
+            <div class="marcas-carousel-inner">
+              <ion-card class="marca-card" *ngFor="let marca of marcas" (click)="onMarcaClick(marca.id)">
+                <img [src]="marca.imagen" alt="{{ marca.nombre }}" />
+              </ion-card>
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
+    </div>
+  </div>
+  <!-- <div class="text-center mt-3">
+    <ion-button color="primary">Ver todas las Marcas</ion-button>
+  </div> -->
+</div>
 
-      <!-- Productos Recomendados -->
-      <div class="container mt-4">
-        <div class="row align-items-center mb-3">
-          <div class="col">
-            <h4 class="text-center mb-3">Productos Recomendados</h4>
-          </div>
-        </div>
-      </div>
 
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" size-md="6" size-lg="3" *ngFor="let product of productos | slice:0:8">
-            <ion-card>
-              <div class="image-container" (click)="navigateToDetail(product)">
-                <img [src]="product.imagen" [alt]="product.nombre" />
-                <div class="overlay" (click)="navigateToDetail(product)">
-                  <p>Más Info</p>
-                </div>
+
+
+
+  <!-- Carrusel de productos en oferta -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Productos en Ofertas</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-slides   pager="true" [options]="slideOpts"  id="carousel-ofertas">
+      <ion-slide>
+        <div class="products-container">
+          <ion-card *ngFor="let producto of productOferta" class="horizontal-card">
+          <div class="image-container">
+            <ion-img [src]="producto.imagen" [alt]="producto.nombre" (click)="navigateToDetail(producto)"></ion-img>
+
+<div *ngIf="producto.envio" class="free-shipping-badgee">
+              Envío Gratis
+            </div>
+
+
+               <div *ngIf="producto.descuento" class="free-shipping-badgo">
+                 {{ producto.descuento | number:'1.0-0' }}%  OFF
               </div>
-              <ion-card-content>
-                <h2><strong>{{ product.nombre }}</strong></h2>
-                <p><strong>Precio Final: ${{ product.precioFinal | number:'1.0-2' }}</strong></p>
+            </div>
+            <ion-card-content>
+              <h2> <strong> {{ producto.nombre }} </strong></h2>
+              <p>Precio: ${{ producto.precioFinal | number:'1.2-2' }}</p>
+              <!-- Mostrar el badge de ENVIO GRATIS si envio es true -->
+              <!-- <ion-badge *ngIf="producto.envio" color="success">ENVÍO GRATIS</ion-badge> -->
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </ion-card-content>
+</ion-card>
 
-                <ion-button expand="full" color="primary" (click)="navigateToDetail(product)">Ver más</ion-button>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+
+
+ <!-- Carrusel de productos Recomendados -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Productos Recomendados</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide>
+        <div class="products-container">
+          <ion-card *ngFor="let product of productos | slice:0:5" class="horizontal-card">
+            <ion-img [src]="product.imagen" [alt]="product.nombre" (click)="navigateToDetail(product)"></ion-img>
+
+<div *ngIf="product.envio" class="free-shipping-badge">
+              Envío Gratis
+            </div>
+
+            <ion-card-content>
+              <h2> <strong>  {{ product.nombre }} </strong></h2>
+              <p>Precio: ${{ product.precioFinal | number:'1.2-2' }}</p>
+
+
+
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </ion-card-content>
+</ion-card>
+
+
+
+
+
+
     </div>
 
     <div *ngIf="isSearching">
@@ -169,8 +200,8 @@
             <img [src]="product.imagen" />
           </ion-thumbnail>
           <ion-label>
-            <h2>{{ product.nombre }}</h2>
-            <p>Codigo: {{ product.codigo }}</p>
+            <h2> <strong>   {{ product.nombre }} </strong></h2>
+
             <p>Precio Final: ${{ product.precioFinal }}</p>
           </ion-label>
           <ion-button fill="clear" color="primary" (click)="navigateToDetail(product)">Ver</ion-button>
@@ -199,3 +230,6 @@
     <ion-icon name="cart"></ion-icon>
   </ion-fab-button>
 </ion-fab>
+
+
+
