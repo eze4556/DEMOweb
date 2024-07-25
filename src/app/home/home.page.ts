@@ -34,14 +34,17 @@ import { Categoria } from 'src/app/common/models/categoria.model';
     IonApp,
     IonCardSubtitle,
     IonSearchbar,
-    IonSegment, IonSegmentButton,
+    IonSegment,
+    IonSegmentButton,
     IonCardTitle,
     IonCardContent,
-    IonSelect, IonSelectOption
+    IonSelect,
+    IonSelectOption,
+
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomePage implements OnInit {
-
   productos: Producto[] = [];
   productosFiltrados: Producto[] = [];
   producto: Producto | undefined;
@@ -56,15 +59,22 @@ export class HomePage implements OnInit {
   isSearching: boolean = false; // Nueva variable de estado
   selectedSegment: string;
 
-  constructor(private router: Router, private firestoreService: FirestoreService,
-    private alertController: AlertController, private authService: AuthService) { }
+  constructor(
+    private router: Router,
+    private firestoreService: FirestoreService,
+    private alertController: AlertController,
+    private authService: AuthService
+  ) {}
 
   async ngOnInit() {
     await this.cargarProductos();
+
     this.marcas = await this.firestoreService.getMarcas();
     this.cargarProductosOferta();
     this.clearSearch();
     await this.loadCategories(); // Cargar categorías
+
+
   }
 
   async loadCategories() {
@@ -103,13 +113,15 @@ export class HomePage implements OnInit {
   }
 
   openInstgram() {
-    const instagramUrl = "https://www.instagram.com/ateneasoft1/";
-    window.open(instagramUrl, '_blank')
+    const instagramUrl = 'https://www.instagram.com/ateneasoft1/';
+    window.open(instagramUrl, '_blank');
   }
 
   comprar() {
     const message = `Hola, estoy interesado en el producto ${this.producto?.nombre}`;
-    const whatsappUrl = `https://wa.me/5491167554362?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/5491167554362?text=${encodeURIComponent(
+      message
+    )}`;
     window.open(whatsappUrl, '_blank');
   }
 
@@ -121,7 +133,7 @@ export class HomePage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Se ha cerrado la sesión',
       message: mensaje,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }
@@ -177,9 +189,11 @@ export class HomePage implements OnInit {
   async cargarProductos() {
     this.productos = await this.firestoreService.getProductos();
     this.productosFiltrados = [];
+      console.log('Productos obtenidos de oferta:', this.productos);
+
   }
 
-  async cargarProductosOferta() {
+  async  cargarProductosOferta() {
     this.productOferta = await this.firestoreService.getProductofertas();
     console.log('Productos obtenidos de oferta:', this.productOferta);
   }
@@ -190,7 +204,7 @@ export class HomePage implements OnInit {
       this.productosFiltrados = [];
       this.isSearching = false;
     } else {
-      this.productosFiltrados = this.productos.filter(producto =>
+      this.productosFiltrados = this.productos.filter((producto) =>
         producto.nombre.toLowerCase().includes(query)
       );
       this.isSearching = true;
@@ -216,7 +230,7 @@ export class HomePage implements OnInit {
     const alert = await this.alertController.create({
       header: '¡Bienvenidx!',
       message: `Hola, ${nombre}!`,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }
@@ -228,4 +242,27 @@ export class HomePage implements OnInit {
   goToCart() {
     this.router.navigate(['/carrito']);
   }
+
+
+//  slideOpts = {
+//     initialSlide: 0,
+//     speed: 400,
+//     spaceBetween: 10,
+//   };
+
+
+slideOpts = {
+  initialSlide: 0,
+  slidesPerView: 1, // Muestra una fila de tarjetas
+  spaceBetween: 10, // Ajusta el espacio entre las tarjetas
+};
+
+
+
+
+
+
+
+
+
 }
