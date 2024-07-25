@@ -8,7 +8,6 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  margin-top: 10em;
 }
 
 .primary-toolbar {
@@ -90,38 +89,4 @@ ion-toolbar.secondary-toolbar ion-buttons ion-button:hover {
 ion-toolbar.secondary-toolbar ion-buttons ion-button:hover::after {
   visibility: visible;
   width: 100%; /* Expande la línea para subrayar el texto */
-}
-
-.marcas-section {
-  background-color: #f8f9fa;
-  padding: 1.25rem 0; /* 20px 0 */
-}
-
-.marcas-scroll-container {
-  display: flex;
-  overflow-x: auto;
-  padding: 0.625rem 0; /* 10px 0 */
-}
-
-.marca-card {
-  background-color: #fff;
-  border-radius: 0.5rem; /* 8px */
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 0 4px 8px */
-  width: 7.5rem; /* 120px */
-  height: 7.5rem; /* 120px */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0.3125rem; /* 5px */
-}
-
-.marca-card img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.footer-content {
-  background-color: #FFCF00;
-  padding: 1.25rem 0; /* 20px 0 */
 }

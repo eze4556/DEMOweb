@@ -1,20 +1,18 @@
-<ion-header>
+<!-- <ion-header>
   <div class="header-background">
     <div class="content-wrapper">
       <ion-toolbar class="primary-toolbar">
         <ion-grid>
           <ion-row class="navbar-container">
-            <!-- Logo -->
+
             <ion-col size="2" class="logo-container">
               <img src="../../assets/iconoNuevo.svg" alt="Logo" class="logo">
             </ion-col>
 
-            <!-- Search bar -->
             <ion-col size="7" class="search-container">
               <ion-searchbar placeholder="Buscar productos" (ionInput)="search($event)"></ion-searchbar>
             </ion-col>
 
-            <!-- User actions -->
             <ion-col size="3" class="user-actions">
               <ng-container *ngIf="user$ | async as user; else loginButton">
                 <p class="welcome-message">Bienvenido {{ user.nombre }}</p>
@@ -32,44 +30,41 @@
         </ion-grid>
       </ion-toolbar>
 
-      <ion-toolbar class="secondary-toolbar">
-        <div style="width: 100%; display: flex; justify-content: center; position: relative;">
-          <ion-buttons>
-            <ion-button id="categoria-button" (click)="toggleDropdown('categoria')">
-              <strong>Categoria</strong>
-              <ion-icon slot="end" [name]="isDropdownOpen['categoria'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
-            </ion-button>
-            <ion-button (click)="toggleDropdown('marcas')">
-              <strong>Marcas</strong>
-              <ion-icon slot="end" [name]="isDropdownOpen['marcas'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
-            </ion-button>
-            <ion-button (click)="toggleDropdown('productos')">
-              <strong>Productos</strong>
-              <ion-icon slot="end" [name]="isDropdownOpen['productos'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
-            </ion-button>
-            <ion-button (click)="toggleDropdown('perfil')">
-              <strong>Perfil</strong>
-              <ion-icon slot="end" [name]="isDropdownOpen['perfil'] ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </div>
-      </ion-toolbar>
+        <ion-toolbar class="secondary-toolbar">
+          <div style="width: 100%; display: flex; justify-content: center;">
+            <ion-buttons>
+              <ion-button id="categoria-button">
+                <strong>Categoria</strong>
+              </ion-button>
+              <ion-popover trigger="categoria-button" triggerAction="click">
+                <ng-template>
+                  <ion-content class="ion-padding">
+                    <ion-list>
+                      <ion-item *ngFor="let categoria of categorias" (click)="onCategoriaClick(categoria.id)">
+                        {{ categoria.nombre }}
+                      </ion-item>
+                    </ion-list>
+                  </ion-content>
+                </ng-template>
+              </ion-popover>
+              <ion-button >
+                <strong>Marcas</strong>
+              </ion-button>
+              <ion-button>
+                <strong>Productos</strong>
+              </ion-button>
+              <ion-button>
+                <strong>Perfil</strong>
+              </ion-button>
+            </ion-buttons>
+          </div>
+        </ion-toolbar>
     </div>
   </div>
-</ion-header>
-
-<!-- Dropdown fuera del ion-header -->
-<div class="dropdown-container" [ngClass]="{ 'open': isDropdownOpen['categoria'] }">
-  <div class="dropdown-arrow"></div>
-  <ion-list>
-    <ion-item *ngFor="let categoria of categorias" (click)="onCategoriaClick(categoria.id)">
-      {{ categoria.nombre }}
-    </ion-item>
-  </ion-list>
-</div>
+</ion-header> -->
 
 
-<ion-content>
+<ion-content >
   <div class="content-wrapper">
     <div *ngIf="!isSearching">
       <!-- Carousel -->

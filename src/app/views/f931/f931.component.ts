@@ -76,6 +76,7 @@ import { CartService } from 'src/app/common/services/cart.service';
     IonCardContent,
     PdfViewerModule,
     IonBadge,
+    IoniconsModule
   ],
 })
 export class F931Component implements OnInit {
@@ -103,7 +104,7 @@ export class F931Component implements OnInit {
   async cargarProductos() {
     this.productos = await this.firestoreService.getProductos();
     this.paginatedProductos = this.getProductosPaginados();
- 
+
   }
 
   paginatedProductos: Producto[] = [];

@@ -5,6 +5,7 @@ export interface Producto {
   nombre: string;
   descripcion: string;
   precio: number;
+  descuento?:number;
   precioFinal?: number; // Opcional si no hay descuento
   codigo: string;
   etiqueta: string;
