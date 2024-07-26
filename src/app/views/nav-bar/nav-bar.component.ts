@@ -7,7 +7,7 @@ import { Categoria } from '../../common/models/categoria.model';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Producto } from 'src/app/common/models/producto.model';
-import { IonSearchbar } from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonList, IonPopover, IonRow, IonSearchbar, IonToolbar } from '@ionic/angular/standalone';
 import { IoniconsModule } from 'src/app/common/modules/ionicons.module';
 
 @Component({
@@ -17,7 +17,18 @@ import { IoniconsModule } from 'src/app/common/modules/ionicons.module';
   standalone: true,
   imports: [
     CommonModule,
-    IonicModule,
+    IonHeader,
+    IonToolbar,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonButton,
+    IonIcon,
+    IonButtons,
+    IonPopover,
+    IonList,
+    IonContent,
+    IonItem,
     IonSearchbar,
     IoniconsModule
   ]
