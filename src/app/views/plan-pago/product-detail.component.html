@@ -19,19 +19,20 @@
           <li><ion-icon name="checkmark-circle-outline"></ion-icon> Categoría: <strong>{{ producto.categoria.nombre }}</strong></li>
           <li><ion-icon name="checkmark-circle-outline"></ion-icon> Marca: <strong>{{ producto.marca.nombre }}</strong></li>
         </ul>
+        <div class="product-payment">
+          <ion-card>
+            <ion-card-content>
+              <h3>Opciones de Pago</h3>
+              <p>Calcula cuándo llega</p>
+              <ion-button expand="full" color="primary" (click)="comprar()">Comprar ahora</ion-button>
+              <ion-button expand="full" color="secondary" (click)="addToCart(producto)">Agregar al carrito</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </div>
       </div>
 
       <!-- Opciones de pago y carrito -->
-      <div class="product-payment">
-        <ion-card>
-          <ion-card-content>
-            <h3>Opciones de Pago</h3>
-            <p>Calcula cuándo llega</p>
-            <ion-button expand="full" color="primary" (click)="comprar()">Comprar ahora</ion-button>
-            <ion-button expand="full" color="secondary" (click)="addToCart(producto)">Agregar al carrito</ion-button>
-          </ion-card-content>
-        </ion-card>
-      </div>
+
     </div>
 
     <!-- Segmento de navegación, ubicado después del contenedor principal -->

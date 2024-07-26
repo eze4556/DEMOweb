@@ -64,160 +64,163 @@
 </ion-header> -->
 
 
-<ion-content >
-  <div class="content-wrapper">
-    <div *ngIf="!isSearching">
-      <!-- Carousel -->
-      <div class="container d-flex justify-content-center">
-        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active d-flex justify-content-center">
-              <img class="d-block w-100" src="../../assets/D_NQ_652380-MLA77603857572_072024-OO.webp" alt="First slide">
+<ion-content>
+
+  <br>
+
+    <div style="margin-top: 8em;" class="content-wrapper" >
+      <div *ngIf="!isSearching">
+        <!-- Carousel -->
+        <div class="container d-flex justify-content-center">
+          <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active d-flex justify-content-center">
+                <img class="d-block w-100" src="../../assets/D_NQ_652380-MLA77603857572_072024-OO.webp" alt="First slide">
+              </div>
             </div>
           </div>
         </div>
+
+
+
+        <!-- Marcas -->
+        <div class="marcas-section">
+    <!-- <h2 class="text-center">NUESTRAS MARCAS</h2> -->
+    <div class="marcas-scroll-container">
+      <div class="marcas-wrapper">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" class="marcas-carousel">
+              <div class="marcas-carousel-inner">
+                <ion-card class="marca-card" *ngFor="let marca of marcas" (click)="onMarcaClick(marca.id)">
+                  <img [src]="marca.imagen" alt="{{ marca.nombre }}" />
+                </ion-card>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+    <!-- <div class="text-center mt-3">
+      <ion-button color="primary">Ver todas las Marcas</ion-button>
+    </div> -->
+  </div>
+
+
+
+
+
+    <!-- Carrusel de productos en oferta -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Productos en Ofertas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-slides   pager="true" [options]="slideOpts"  id="carousel-ofertas">
+        <ion-slide>
+          <div class="products-container">
+            <ion-card *ngFor="let producto of productOferta" class="horizontal-card">
+            <div class="image-container">
+              <ion-img [src]="producto.imagen" [alt]="producto.nombre" (click)="navigateToDetailOferta(producto)"></ion-img>
+
+  <div *ngIf="producto.envio" class="free-shipping-badgee">
+                Envío Gratis
+              </div>
+
+
+                 <div *ngIf="producto.descuento" class="free-shipping-badgo">
+                   {{ producto.descuento | number:'1.0-0' }}%  OFF
+                </div>
+              </div>
+              <ion-card-content>
+                <h2> <strong> {{ producto.nombre }} </strong></h2>
+                <p>Precio: ${{ producto.precioFinal | number:'1.2-2' }}</p>
+                <!-- Mostrar el badge de ENVIO GRATIS si envio es true -->
+                <!-- <ion-badge *ngIf="producto.envio" color="success">ENVÍO GRATIS</ion-badge> -->
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </ion-card-content>
+  </ion-card>
+
+
+
+   <!-- Carrusel de productos Recomendados -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Productos Recomendados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide>
+          <div class="products-container">
+            <ion-card *ngFor="let product of productos | slice:0:5" class="horizontal-card">
+              <ion-img [src]="product.imagen" [alt]="product.nombre" (click)="navigateToDetail(product)"></ion-img>
+
+  <div *ngIf="product.envio" class="free-shipping-badge">
+                Envío Gratis
+              </div>
+
+              <ion-card-content>
+                <h2> <strong>  {{ product.nombre }} </strong></h2>
+                <p>Precio: ${{ product.precioFinal | number:'1.2-2' }}</p>
+
+
+
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </ion-card-content>
+  </ion-card>
+
+
+
+
+
+
       </div>
 
+      <div *ngIf="isSearching">
+        <ion-list>
+          <ion-item *ngFor="let product of productosFiltrados">
+            <ion-thumbnail slot="start">
+              <img [src]="product.imagen" />
+            </ion-thumbnail>
+            <ion-label>
+              <h2> <strong>   {{ product.nombre }} </strong></h2>
 
-
-      <!-- Marcas -->
-      <div class="marcas-section">
-  <!-- <h2 class="text-center">NUESTRAS MARCAS</h2> -->
-  <div class="marcas-scroll-container">
-    <div class="marcas-wrapper">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" class="marcas-carousel">
-            <div class="marcas-carousel-inner">
-              <ion-card class="marca-card" *ngFor="let marca of marcas" (click)="onMarcaClick(marca.id)">
-                <img [src]="marca.imagen" alt="{{ marca.nombre }}" />
-              </ion-card>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+              <p>Precio Final: ${{ product.precioFinal }}</p>
+            </ion-label>
+            <ion-button fill="clear" color="primary" (click)="navigateToDetail(product)">Ver</ion-button>
+          </ion-item>
+        </ion-list>
+      </div>
     </div>
-  </div>
-  <!-- <div class="text-center mt-3">
-    <ion-button color="primary">Ver todas las Marcas</ion-button>
-  </div> -->
-</div>
+    <ion-footer>
+      <div class="footer-content text-center">
+        <p>&copy; 2024 Derechos Reservados | Desarrollado por <a href="https://www.ateneasoftware.net" target="_blank">Ateneasoftware.net</a></p>
+        <img src="./assets/iconoAtenea.webp" alt="Icono de la empresa" style="width: 150px;">
+      </div>
+    </ion-footer>
+  </ion-content>
 
+  <!-- Botón flotante de WhatsApp -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" (click)="openWhatsApp()">
+      <ion-icon name="logo-whatsapp" color="light"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
-
-
-
-  <!-- Carrusel de productos en oferta -->
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Productos en Ofertas</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-slides   pager="true" [options]="slideOpts"  id="carousel-ofertas">
-      <ion-slide>
-        <div class="products-container">
-          <ion-card *ngFor="let producto of productOferta" class="horizontal-card">
-          <div class="image-container">
-            <ion-img [src]="producto.imagen" [alt]="producto.nombre" (click)="navigateToDetail(producto)"></ion-img>
-
-<div *ngIf="producto.envio" class="free-shipping-badgee">
-              Envío Gratis
-            </div>
-
-
-               <div *ngIf="producto.descuento" class="free-shipping-badgo">
-                 {{ producto.descuento | number:'1.0-0' }}%  OFF
-              </div>
-            </div>
-            <ion-card-content>
-              <h2> <strong> {{ producto.nombre }} </strong></h2>
-              <p>Precio: ${{ producto.precioFinal | number:'1.2-2' }}</p>
-              <!-- Mostrar el badge de ENVIO GRATIS si envio es true -->
-              <!-- <ion-badge *ngIf="producto.envio" color="success">ENVÍO GRATIS</ion-badge> -->
-            </ion-card-content>
-          </ion-card>
-        </div>
-      </ion-slide>
-    </ion-slides>
-  </ion-card-content>
-</ion-card>
-
-
-
- <!-- Carrusel de productos Recomendados -->
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Productos Recomendados</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide>
-        <div class="products-container">
-          <ion-card *ngFor="let product of productos | slice:0:5" class="horizontal-card">
-            <ion-img [src]="product.imagen" [alt]="product.nombre" (click)="navigateToDetail(product)"></ion-img>
-
-<div *ngIf="product.envio" class="free-shipping-badge">
-              Envío Gratis
-            </div>
-
-            <ion-card-content>
-              <h2> <strong>  {{ product.nombre }} </strong></h2>
-              <p>Precio: ${{ product.precioFinal | number:'1.2-2' }}</p>
-
-
-
-            </ion-card-content>
-          </ion-card>
-        </div>
-      </ion-slide>
-    </ion-slides>
-  </ion-card-content>
-</ion-card>
-
-
-
-
-
-
-    </div>
-
-    <div *ngIf="isSearching">
-      <ion-list>
-        <ion-item *ngFor="let product of productosFiltrados">
-          <ion-thumbnail slot="start">
-            <img [src]="product.imagen" />
-          </ion-thumbnail>
-          <ion-label>
-            <h2> <strong>   {{ product.nombre }} </strong></h2>
-
-            <p>Precio Final: ${{ product.precioFinal }}</p>
-          </ion-label>
-          <ion-button fill="clear" color="primary" (click)="navigateToDetail(product)">Ver</ion-button>
-        </ion-item>
-      </ion-list>
-    </div>
-  </div>
-  <ion-footer>
-    <div class="footer-content text-center">
-      <p>&copy; 2024 Derechos Reservados | Desarrollado por <a href="https://www.ateneasoftware.net" target="_blank">Ateneasoftware.net</a></p>
-      <img src="./assets/iconoAtenea.webp" alt="Icono de la empresa" style="width: 150px;">
-    </div>
-  </ion-footer>
-</ion-content>
-
-<!-- Botón flotante de WhatsApp -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button color="success" (click)="openWhatsApp()">
-    <ion-icon name="logo-whatsapp" color="light"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
-<!-- Botón flotante de carrito de compras -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" style="margin-bottom: 80px;">
-  <ion-fab-button color="primary" (click)="goToCart()">
-    <ion-icon name="cart"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+  <!-- Botón flotante de carrito de compras -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" style="margin-bottom: 80px;">
+    <ion-fab-button color="primary" (click)="goToCart()">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 
 

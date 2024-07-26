@@ -1,5 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonFab, IonFabList, IonFabButton, IonFooter, IonSegment, IonCardHeader, IonThumbnail, IonCardTitle, IonCardContent, IonCardSubtitle, IonSegmentButton, IonChip, IonAvatar, IonSearchbar, IonApp, IonTitle, IonContent, IonLabel, IonList, IonItem, IonCard, IonInput, IonSpinner, IonButtons, IonButton, IonIcon, IonImg, IonCol, IonRow, IonBackButton, IonGrid, IonSelect, IonSelectOption, IonPopover } from '@ionic/angular/standalone';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  IonHeader,
+  IonToolbar,
+  IonFab,
+  IonFabList,
+  IonFabButton,
+  IonFooter,
+  IonSegment,
+  IonCardHeader,
+  IonThumbnail,
+  IonCardTitle,
+  IonCardContent,
+  IonCardSubtitle,
+  IonSegmentButton,
+  IonChip,
+  IonAvatar,
+  IonSearchbar,
+  IonApp,
+  IonTitle,
+  IonContent,
+  IonLabel,
+  IonList,
+  IonItem,
+  IonCard,
+  IonInput,
+  IonSpinner,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonImg,
+  IonCol,
+  IonRow,
+  IonBackButton,
+  IonGrid,
+  IonSelect,
+  IonSelectOption,
+
+} from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { IoniconsModule } from '../common/modules/ionicons.module';
 import { Router } from '@angular/router';
@@ -14,14 +51,36 @@ import { Marca } from '../common/models/marca.model';
 import { Productoferta } from '../common/models/productofree.model';
 import { Categoria } from 'src/app/common/models/categoria.model';
 
+type DropdownSegment = 'categoria' | 'marcas' | 'productos' | 'perfil';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
-    IonPopover,IonGrid, IonBackButton, IonRow, IonCol, IonFabButton, IonImg, IonList, IonLabel, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonInput,
-    IonIcon, IonButton, IonButtons, IonFab, IonSpinner, IonInput, IonCard,
+    IonGrid,
+    IonBackButton,
+    IonRow,
+    IonCol,
+    IonFabButton,
+    IonImg,
+    IonList,
+    IonLabel,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonInput,
+    IonIcon,
+    IonButton,
+    IonButtons,
+    IonFab,
+    IonSpinner,
+    IonInput,
+    IonCard,
     FormsModule,
     IoniconsModule,
     CommonModule,
@@ -58,6 +117,12 @@ export class HomePage implements OnInit {
   marcas: Marca[] = [];
   isSearching: boolean = false; // Nueva variable de estado
   selectedSegment: string;
+  isDropdownOpen: Record<string, boolean> = {
+    categoria: false,
+    marcas: false,
+    productos: false,
+    perfil: false,
+  };
 
   constructor(
     private router: Router,
@@ -90,7 +155,17 @@ export class HomePage implements OnInit {
     this.router.navigate(['/certificacion', { categoriaId: categoriaId }]);
   }
 
-
+  toggleDropdown(menu: string) {
+    this.isDropdownOpen[menu] = !this.isDropdownOpen[menu];
+    if (this.isDropdownOpen[menu]) {
+      // Cerrar otros dropdowns si uno está abierto
+      for (let key in this.isDropdownOpen) {
+        if (key !== menu) {
+          this.isDropdownOpen[key] = false;
+        }
+      }
+    }
+  }
 
   navigateToCategoria(categoriaId: string) {
     this.router.navigate(['/productos-categoria', categoriaId]);

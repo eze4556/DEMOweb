@@ -1,4 +1,4 @@
-import { IonContent, IonCard, IonIcon, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonTitle, IonButtons, IonToolbar, IonBackButton, IonHeader, IonGrid, IonRow, IonCol, IonSpinner } from '@ionic/angular/standalone';
+import { IonContent, IonCard, IonIcon, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonTitle, IonButtons, IonToolbar, IonBackButton, IonHeader, IonGrid, IonRow, IonCol, IonSpinner, IonSegment, IonSegmentButton, IonLabel } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../../common/services/firestore.service';
@@ -9,18 +9,20 @@ import { Productoferta } from 'src/app/common/models/productofree.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/common/services/cart.service';
 import { AlertController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-productoferta-detail',
   templateUrl: './productoferta-detail.component.html',
   styleUrls: ['./productoferta-detail.component.scss'],
   standalone: true,
-  imports: [IonSpinner, IonCol, IonRow, IonIcon, IonGrid, IonHeader, IonBackButton, IonToolbar, IonButtons, IonButton, IonTitle, CommonModule, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent]
+  imports: [ FormsModule,IonSegment, IonSegmentButton, IonLabel,
+    IonSpinner, IonCol, IonRow, IonIcon, IonGrid, IonHeader, IonBackButton, IonToolbar, IonButtons, IonButton, IonTitle, CommonModule, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent]
 })
 export class ProductofertaDetailComponent implements OnInit {
   productId: string;
   productoferta: Productoferta | undefined;
-
+  selectedSegment: string = 'caracteristicas'; // Default segment
   constructor(
     private firestoreService: FirestoreService,
     private storage: Storage,
