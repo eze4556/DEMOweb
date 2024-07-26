@@ -7,6 +7,8 @@ import { Categoria } from '../../common/models/categoria.model';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Producto } from 'src/app/common/models/producto.model';
+import { IonSearchbar } from '@ionic/angular/standalone';
+import { IoniconsModule } from 'src/app/common/modules/ionicons.module';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,7 +17,9 @@ import { Producto } from 'src/app/common/models/producto.model';
   standalone: true,
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    IonSearchbar,
+    IoniconsModule
   ]
 })
 export class GlobalHeaderComponent implements OnInit {
