@@ -22,22 +22,47 @@
   gap: 20px;
 }
 
-.product-image-container {
-  flex: 40%; /* Ajusta el ancho según sea necesario */
-}
-
-.product-details-container {
-  flex: 60%; /* Ajusta el ancho según sea necesario */
+.product-image-and-segment {
+  flex: 70%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%; /* Asegúrate de que ocupe el 100% del ancho disponible */
+}
+
+.product-image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .product-image {
-  width: 70%;
+  width: 100%;
   height: auto;
   max-height: 300px;
   object-fit: scale-down;
   margin-bottom: 16px;
+}
+
+.product-segment {
+  margin-top: 16px;
+  width: 100%; /* Asegúrate de que ocupe todo el ancho del contenedor */
+}
+
+.segment-content {
+  width: 100%;
+  margin-top: 16px;
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-details-container {
+  flex: 30%;
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Asegúrate de que ocupe el 100% del ancho disponible */
 }
 
 .product-details {
@@ -106,6 +131,18 @@
   margin-bottom: 16px;
 }
 
+ion-button.buy-now-button {
+  --color: #ffffff; /* Letras blancas */
+  --background-hover: #0a5ba1; /* Color de fondo del botón al hacer hover */
+}
+
+.payment-card {
+  border: 1px solid #ccc; /* Agrega un borde */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
+  background-color: #fafafa; /* Color de fondo más claro */
+  margin-top: 20px; /* Separación superior */
+}
+
 ion-button {
   margin-top: 16px;
   width: 100%;
@@ -124,14 +161,4 @@ ion-button {
 
 ion-content {
   --background: #ebebeb;
-}
-
-.product-segment {
-  margin-top: 20px;
-  margin-bottom: 16px;
-  width: 100%;
-}
-
-ion-segment-button {
-  --indicator-color: #1025df;
 }

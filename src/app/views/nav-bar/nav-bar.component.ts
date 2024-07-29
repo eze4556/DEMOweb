@@ -64,8 +64,8 @@ export class GlobalHeaderComponent implements OnInit {
     this.router.navigate(['/certificacion', { categoriaId: categoriaId }]);
   }
 
-  navigateToLogin() {
-    this.router.navigate(['/login']);
+  navigateToProduct() {
+    this.router.navigate(['/F931']);
   }
 
   logout() {
